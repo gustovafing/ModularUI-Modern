@@ -13,10 +13,10 @@ public class Unit {
 
     public enum State {
 
-        UNUSED("", ""),
-        START("LEFT", "TOP"),
-        END("RIGHT", "BOTTOM"),
-        SIZE("WIDTH", "HEIGHT");
+        UNUSED("Unused", "Unused"),
+        START("Left", "Top"),
+        END("Right", "Bottom"),
+        SIZE("Width", "Height");
 
         public final String xText, yText;
 

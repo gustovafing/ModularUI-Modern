@@ -22,6 +22,7 @@ public class DimensionSizer {
     private final ResizeNode resizer;
     private final GuiAxis axis;
 
+    @Getter
     private final Unit p1 = new Unit(), p2 = new Unit();
     private Unit start, end, size;
     private Unit next = p1;
@@ -392,7 +393,7 @@ public class DimensionSizer {
      * @param newState the new unit type for the found unit
      * @return a used or unused unit.
      */
-    private Unit getNext(IWidget widget, Unit.State newState) {
+    public Unit getNext(IWidget widget, Unit.State newState) {
         Unit ret = this.next;
         Unit other = ret == this.p1 ? this.p2 : this.p1;
         if (ret.state != Unit.State.UNUSED) {
@@ -412,6 +413,28 @@ public class DimensionSizer {
         this.next = other;
         return ret;
     }
+
+    public Unit getNext(IWidget widget, Unit.State newState, boolean replaceFirst) {
+        Unit ret = replaceFirst ? p1 : p2;
+        Unit other = replaceFirst ? this.p2 : this.p1;
+        if (ret.state != Unit.State.UNUSED) {
+            if (ret.state == newState) return ret;
+            if (other.state == newState) return other;
+            if (ret == this.start) this.start = null;
+            if (ret == this.end) this.end = null;
+            if (ret == this.size) this.size = null;
+            if (ModularUIConfig.Dev.debugUI() && ModularUI.isClientThread()) {
+                // only log on client in debug mode since its sometimes intentional
+                ModularUI.LOGGER.info("unit {} of widget {} was already used and will be overwritten with unit {}",
+                        ret.state.getText(this.axis), widget, newState.getText(this.axis));
+            }
+        }
+        ret.reset();
+        ret.state = newState;
+        this.next = other;
+        return ret;
+    }
+
 
     protected Unit getStart(IWidget widget) {
         if (this.start == null) {

@@ -24,7 +24,9 @@ import java.util.function.DoubleSupplier;
  */
 public class StandardResizer extends WidgetResizeNode implements IPositioned<StandardResizer> {
 
+    @Getter
     private final DimensionSizer x;
+    @Getter
     private final DimensionSizer y;
     @Getter
     private boolean expanded = false;
