@@ -26,6 +26,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class WidgetInfoPanel extends Flow {
@@ -87,25 +89,24 @@ public class WidgetInfoPanel extends Flow {
 
     private Flow unitRow(Supplier<Unit> unit, boolean firstUnit, GuiAxis axis) {
 
+        var dropdown = new DropdownWidget<>("unit" + axis.name() + (firstUnit ? "1" : "2"), Unit.State.class)
+                .size(40, 20)
+                .options(Unit.State.START)
+                .option(Unit.State.END)
+                .option(Unit.State.SIZE)
+                .option(Unit.State.UNUSED)
+                .optionToWidget((s, forSelected) -> {
+                    return new TextWidget<>(s.getText(axis)).center().color(Color.WHITE.main).padding(0, 5);
+                });
+
         EnumValue.Dynamic<Unit.State> unitType = new EnumValue.Dynamic<>(Unit.State.class, () -> unit.get().state, u -> {
             var dimSizer = axis == GuiAxis.X ? selectedWidget().resizer().getX() : selectedWidget().resizer().getY();
             dimSizer.getNext(selectedWidget(), u, firstUnit);
             selectedWidget().resizer().scheduleResize();
         });
 
-        var dropdown = new DropdownWidget<>("unit" + axis.name() + (firstUnit ? "1" : "2"), Unit.State.class)
-                .size(40, 20)
-                .value(unitType)
-                .options(Unit.State.START)
-                .option(Unit.State.END)
-                .option(Unit.State.SIZE)
-                .option(Unit.State.UNUSED)
-                .optionToWidget((s, forSelected) -> {
-                    return new TextWidget<>(s.getText(axis)).center().color(Color.WHITE.main);
-                });
-
         return Flow.row().height(20)
-                .child(dropdown)
+                .child(dropdown.value(unitType))
                 .child(measure(unit))
                 .child(value(unit))
                 .child(offset(unit))
