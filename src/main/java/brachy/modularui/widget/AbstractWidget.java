@@ -9,6 +9,7 @@ import brachy.modularui.screen.viewport.ModularGuiContext;
 import brachy.modularui.widget.sizer.Area;
 import brachy.modularui.widget.sizer.StandardResizer;
 
+import lombok.Setter;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,7 @@ public abstract class AbstractWidget implements IWidget {
     private ModularGuiContext context = null;
 
     @Nullable
-    private String name;
+    @Setter private String name;
     private boolean enabled = true;
     private int timeHovered = -1;
     private int timeBelowMouse = -1;
@@ -319,10 +320,6 @@ public abstract class AbstractWidget implements IWidget {
     @Override
     public @Nullable String getName() {
         return name;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
     }
 
     public boolean isName(String name) {

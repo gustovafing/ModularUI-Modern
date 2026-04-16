@@ -79,7 +79,7 @@ public interface GuiTextures {
     UITexture CURSOR = icon("cursor", 32, 240);
 
     UITexture SEPERATOR_SIMPLE = UITexture.builder()
-            .location(ModularUI.MOD_ID, "textures/gui/icon/seperator_simple.png")
+            .location(ModularUI.MOD_ID, "textures/gui/icons/seperator_simple.png")
             .imageSize(16, 5)
             .adaptable(2)
             .build();

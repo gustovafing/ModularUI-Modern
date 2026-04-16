@@ -13,7 +13,7 @@ public class EditorUIHolder implements IUIHolder<GuiData> {
 
     @Override
     public ModularScreen createScreen(GuiData data, ModularPanel<?> mainPanel) {
-        return new ModularScreen(ModularUI.MOD_ID, mainPanel);
+        return new EditorScreen(ModularUI.MOD_ID, mainPanel);
     }
 
     @Override
