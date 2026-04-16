@@ -78,6 +78,12 @@ public interface GuiTextures {
     UITexture DISABLED = icon("disabled", 16, 240);
     UITexture CURSOR = icon("cursor", 32, 240);
 
+    UITexture SEPERATOR_SIMPLE = UITexture.builder()
+            .location(ModularUI.MOD_ID, "textures/gui/icon/seperator_simple.png")
+            .imageSize(16, 5)
+            .adaptable(2)
+            .build();
+
     UITexture MUI_LOGO = UITexture.builder()
             .location(ModularUI.MOD_ID, "modular_ui_logo")
             .imageSize(603, 603)

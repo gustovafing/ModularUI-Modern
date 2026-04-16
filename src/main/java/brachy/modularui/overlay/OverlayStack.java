@@ -3,6 +3,8 @@ package brachy.modularui.overlay;
 import brachy.modularui.ModularUIConfig;
 import brachy.modularui.api.IMuiScreen;
 import brachy.modularui.api.widget.IWidget;
+import brachy.modularui.editor.EditorScreen;
+import brachy.modularui.editor.EditorUIOverlayScreen;
 import brachy.modularui.screen.ClientScreenHandler;
 import brachy.modularui.screen.ModularScreen;
 import brachy.modularui.screen.OpenScreenEvent;
@@ -18,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -132,6 +133,11 @@ public class OverlayStack {
             }
             if (ModularUIConfig.Dev.debugUI() && newScreen instanceof IMuiScreen muiScreen) {
                 ModularScreen overlay = new DebugOverlay(muiScreen);
+                overlay.constructOverlay(newScreen);
+                open(overlay);
+            }
+            if (newScreen instanceof IMuiScreen muiScreen && muiScreen.screen() instanceof EditorScreen) {
+                ModularScreen overlay = new EditorUIOverlayScreen(muiScreen);
                 overlay.constructOverlay(newScreen);
                 open(overlay);
             }

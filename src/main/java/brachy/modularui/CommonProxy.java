@@ -1,6 +1,8 @@
 package brachy.modularui;
 
 import brachy.modularui.api.drawable.Text;
+import brachy.modularui.editor.EditorUIHolder;
+import brachy.modularui.factory.SimpleUIFactory;
 import brachy.modularui.factory.UIFactories;
 import brachy.modularui.factory.inventory.InventoryTypes;
 import brachy.modularui.network.NetworkHandler;
@@ -60,6 +62,8 @@ public class CommonProxy {
         }
     }
 
+    private static final SimpleUIFactory EDITOR_FACTORY = new SimpleUIFactory(ModularUI.id("editor"), EditorUIHolder::new);
+
     public void registerCommand(RegisterCommandsEvent event) {
         var command = Commands.literal("mui")
                 .then(Commands.literal("reload_themes")
@@ -68,7 +72,12 @@ public class CommonProxy {
                             // TODO translations for this
                             ctx.getSource().sendSuccess(() -> Component.literal("ModularUI Themes reloaded").withStyle(Text.GREEN), true);
                             return Command.SINGLE_SUCCESS;
+                        }))
+                        .then(Commands.literal("editor").executes(ctx -> {
+                            EDITOR_FACTORY.open(ctx.getSource().getPlayerOrException());
+                            return Command.SINGLE_SUCCESS;
                         }));
+
         event.getDispatcher().register(command);
     }
 }
