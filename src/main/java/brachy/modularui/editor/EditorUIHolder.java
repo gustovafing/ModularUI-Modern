@@ -9,6 +9,9 @@ import brachy.modularui.screen.UISettings;
 import brachy.modularui.test.TestGuis;
 import brachy.modularui.value.sync.PanelSyncManager;
 
+import org.jetbrains.annotations.ApiStatus;
+
+@ApiStatus.Internal
 public class EditorUIHolder implements IUIHolder<GuiData> {
 
     @Override
